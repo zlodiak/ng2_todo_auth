@@ -3,4 +3,5 @@ export class Todo {
 	title: string;
 	isChecked: boolean;
 	dateUnix: number;
+	userLogin: string;
 }

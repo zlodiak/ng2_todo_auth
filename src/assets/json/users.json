@@ -19,5 +19,19 @@
 		"fName": "Sergey2",
 		"mName": "Alex2",
 		"lName": "Kalinin2"
-	}		
+	},
+	"1": {
+		"password": "1",
+		"birthDateUnix": 48963438712634,
+		"fName": "1",
+		"mName": "1",
+		"lName": "1"
+	},
+	"2": {
+		"password": "2",
+		"birthDateUnix": 48926343872634,
+		"fName": "2",
+		"mName": "2",
+		"lName": "2"
+	}			
 }

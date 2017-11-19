@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { TodosService } from '../../services/todos.service';
+import { GlobalVarsService } from '../../services/global-vars.service';
 import { Todo } from '../../types/todo';
 
 
@@ -16,8 +17,13 @@ export class ListComponent implements OnInit {
   private checkboxes: Object = {};
   private activeBtn: string = 'All';
   private isAllChecked: boolean = false;
+  private authorizedLogin: string = '';
 
-  constructor(private todosService: TodosService) {};
+  constructor(private todosService: TodosService,
+              private globalVarsService: GlobalVarsService) 
+  {
+    this.authorizedLogin = this.globalVarsService.getVar('authorizedLogin');
+  };
 
   ngOnInit() {
 		this.setActiveBtn(this.activeBtn);
@@ -28,9 +34,13 @@ export class ListComponent implements OnInit {
   	let newTodos: Todo[] = [];
 
   	todos.forEach((todo) => {
-  		this.checkboxes[todo.id] = this.isAllChecked;
-  		todo.isChecked = this.isAllChecked;
-  		newTodos.push(todo);
+      if(todo.userLogin == this.authorizedLogin) {
+        this.checkboxes[todo.id] = this.isAllChecked;
+        todo.isChecked = this.isAllChecked;
+        newTodos.push(todo);
+      } else if(todo.userLogin != this.authorizedLogin) {
+        newTodos.push(todo);
+      }
   	});
 
   	this.todosService.rewriteTodos(newTodos);
@@ -38,10 +48,11 @@ export class ListComponent implements OnInit {
   };
 
   private clearCompleted(): void {
-  	let todos = this.todosService.getTodos();
+  	let todos = this.todosService.getTodos(this.authorizedLogin);
 
   	todos.forEach((todo) => {
   		if(todo.isChecked === true) {
+        console.log('del', todo.isChecked, this.authorizedLogin);
   			this.todosService.removeTodo(todo.id);
   		}
   	});  	
@@ -51,12 +62,12 @@ export class ListComponent implements OnInit {
 
   private removeTodo(id): void {
   	this.todosService.removeTodo(id);
-  	this.ngOnInit();
+    this.ngOnInit();
   };
 
-  private setActiveBtn(btn): void {  	
+  private setActiveBtn(btn): void {  	    
   	this.activeBtn = btn;   
-  	this.todos = this.todosService.getTodos();
+  	this.todos = this.todosService.getTodos(this.authorizedLogin);
 
   	this.todos.forEach((todo) => {
   		this.checkboxes[todo.id] = todo.isChecked;
@@ -112,8 +123,8 @@ export class ListComponent implements OnInit {
   		id: Date.now() + '_' + performance.now(),
   		title: this.newTodo.trim(),
   		isChecked: false,
-  		dateUnix: Date.now()
-
+  		dateUnix: Date.now(),
+      userLogin: this.globalVarsService.getVar('authorizedLogin')
   	};
 
   	this.todosService.addTodo(newTodoObj);

@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
     //console.log(isValidLogin, isValidPassword); 
 
     if(isValidLogin && isValidPassword) {
-      alert('auth successful');
+      //alert('auth successful');
       this.globalVarsService.setVar('authorizedLogin', this.login);
       this.router.navigate(['/list']);
     } else {

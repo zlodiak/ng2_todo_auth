@@ -12,8 +12,22 @@ export class TodosService {
   	localStorage.todos = JSON.stringify(todos);
   }
 
-  getTodos() {
-  	return localStorage.todos ? JSON.parse(localStorage.todos) : [];
+  getTodos(authorizedLogin = undefined) {
+    let todos = localStorage.todos ? JSON.parse(localStorage.todos) : [];
+
+    //console.log(authorizedLogin, '__todos', todos, typeof todos);
+
+    if(!authorizedLogin) { return todos; }
+
+    let newTodos = [];
+
+    todos.forEach((todo) => {
+      if(todo.userLogin == authorizedLogin) {
+        newTodos.push(todo);
+      }
+    });
+
+  	return newTodos;
   };
 
   removeTodo(id) {
