@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AuthGuardService } from './services/auth-guard.service';
+
 import { LoginComponent } from './components/login/login.component';
 import { ListComponent } from './components/list/list.component';
 import { DetailsComponent } from './components/details/details.component';
@@ -16,11 +18,13 @@ const routes: Routes = [
   {
     path: 'list',
     children: [],
+    canActivate: [AuthGuardService],
     component: ListComponent
   }, 
   {
     path: 'details',
     children: [],
+    canActivate: [AuthGuardService],
     component: DetailsComponent
   },
   {
@@ -30,6 +34,7 @@ const routes: Routes = [
   },  
   {
     path: '**', 
+    canActivate: [AuthGuardService],
     component: PageNotFoundComponent
   }  
 ];

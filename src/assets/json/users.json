@@ -1,20 +1,20 @@
 {
 	"kalinin": {
-		"pass": "qwe",
+		"password": "qwe",
 		"birthDateUnix": 489634872634,
 		"fName": "Sergey",
 		"mName": "Alex",
 		"lName": "Kalinin"
 	},
 	"kalinin1": {
-		"pass": "qwe1",
+		"password": "qwe1",
 		"birthDateUnix": 48963482634,
 		"fName": "Sergey1",
 		"mName": "Alex1",
 		"lName": "Kalinin1"
 	},
 	"kalinin2": {
-		"pass": "qwe2",
+		"password": "qwe2",
 		"birthDateUnix": 4896343872634,
 		"fName": "Sergey2",
 		"mName": "Alex2",
