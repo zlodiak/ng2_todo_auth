@@ -1,0 +1,77 @@
+<mat-card class="wrap">
+  <div class="header">
+    <div class="all-checked">
+      <mat-checkbox [(ngModel)]="isAllChecked" 
+                    *ngIf="todos.length > 0"
+                    (change)="toggleAllChecked()"></mat-checkbox>
+    </div>
+
+    <mat-form-field class="todo-input-outer">
+      <input  class="todo-input" 
+              matInput placeholder="New task" 
+              (blur)="createTodo()"
+              (keyup.enter)="createTodo()"
+              [(ngModel)]="newTodo">
+    </mat-form-field>
+  </div>
+
+  <div class="todos-list">
+    <div  class="inner item" 
+          id="todo_{{ todo.id }}"
+          *ngFor="let todo of todos" 
+          (mouseenter)="changeRemoveIcon(todo.id, 'enter')" 
+          (mouseleave)="changeRemoveIcon(todo.id, 'leave')">
+      <div class="checkbox-area">
+        <mat-checkbox [(ngModel)]="checkboxes[todo.id]" 
+                      (change)="toggleTodoState(todo.id, checkboxes[todo.id])"></mat-checkbox>
+      </div>
+
+      <div class="inner title-area" [ngClass]="{checked: checkboxes[todo.id]}">{{ todo.title }}</div>
+
+      <div class="inner remove-area">
+        <div class="icon">
+          <i class="material-icons" (click)="removeTodo(todo.id)">close</i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="inner cnt">{{ (todos | todos).length }} items left</div>
+
+    <div class="inner visibility">
+      <button class="btn btn-common" 
+              id="All" type="button" 
+              mat-button 
+              [ngClass]="{active: activeBtn == 'All'}" 
+              (click)="setActiveBtn('All')">All</button>
+
+      <button class="btn btn-common" 
+              id="Active" type="button" 
+              mat-button 
+              [ngClass]="{active: activeBtn == 'Active'}" 
+              (click)="setActiveBtn('Active')">Active</button>
+
+      <button class="btn btn-common" 
+              id="Completed" 
+              type="button" 
+              mat-button 
+              [ngClass]="{active: activeBtn == 'Completed'}" 
+              (click)="setActiveBtn('Completed')">Completed</button>
+    </div>
+
+    <div class="inner clear">
+      <button class="btn btn-common" 
+                    id="clearCompleted" 
+                    type="button" 
+                    mat-button 
+                    (click)="clearCompleted()">Clear completed</button>
+    </div>
+  </div>
+</mat-card>
+
+<div class="author">
+  <div class="copyright">© Sergey Kalinin 2017</div>
+  <a class="github" href="https://github.com/zlodiak/ng2_todo_simple">https://github.com/zlodiak/ng2_todo_simple</a>
+</div>
+ 
